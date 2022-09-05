@@ -27,7 +27,7 @@ function newButtons() {
     paletteColor[i].style.backgroundColor = storageColors[i - 1];
   }
 
-  console.log(storageColors);
+  localStorage.setItem('colorPalette', JSON.stringify(storageColors));
 }
 
 btnRandomColor.addEventListener('click', newButtons);
