@@ -29,6 +29,8 @@ function newButtons() {
   }
 
   localStorage.setItem('colorPalette', JSON.stringify(storageColors));
+
+  console.log(JSON.parse(localStorage.getItem('colorPalette')));
 } btnRandomColor.addEventListener('click', newButtons);
 
 function pixelBoard() {
@@ -46,3 +48,9 @@ function pixelBoard() {
     }
   }
 } pixelBoard();
+
+function startSelected() {
+  const firstColor = document.querySelectorAll('.color')[0];
+
+  firstColor.classList.add('selected');
+} startSelected();
