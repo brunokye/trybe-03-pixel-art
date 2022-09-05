@@ -12,9 +12,10 @@
 }
 
 .color {
+  width: 40px;
+  height: 40px;
   display: inline-block;
   border: 1px solid black;
-  padding: 25px;
 }
 
 .color:nth-child( 1 ) {
@@ -36,4 +37,20 @@
 #button-random-color {
   margin: 0 10px;
   padding: 5px;
+}
+
+#pixel-board {
+  margin: 15px 10px;
+}
+
+.line {
+  line-height: 0px;
+}
+
+.pixel {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid black;
+  display: inline-block;
 }
