@@ -1,46 +1,33 @@
-const colors = [
-  'red',
-  'green',
-  'blue',
-  'yellow',
-  'pink',
-  'purple',
-  'grey',
-  'brown',
-  'orange',
-  'beige',
-];
 const paletteColor = document.querySelectorAll('.color');
 const btnRandomColor = document.getElementById('button-random-color');
+let storageColors = [];
 
-function randomColor(event) {
-  let generate = event;
-  generate = colors[Math.floor(Math.random() * colors.length)];
+// Random RGB - https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript
+function newColors() {
+  const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+  const r = randomBetween(0, 255);
+  const g = randomBetween(0, 255);
+  const b = randomBetween(0, 255);
 
-  return generate;
+  return `rgb(${r},${g},${b})`;
 }
 
 function colorsArray() {
-  const usedColors = [];
+  storageColors = [];
 
   for (let i = 1; i < paletteColor.length; i += 1) {
-    usedColors.push(randomColor());
+    storageColors.push(newColors());
   }
-
-  localStorage.setItem('colors', JSON.stringify(usedColors));
-  return usedColors;
 }
 
-function newColors() {
+function newButtons() {
   colorsArray();
 
   for (let i = 1; i < paletteColor.length; i += 1) {
-    for (let j = 0; j < colorsArray.length; j += 1) {
-      paletteColor[i].style.backgroundColor = colorsArray[j];
-    }
+    paletteColor[i].style.backgroundColor = storageColors[i - 1];
   }
+
+  console.log(storageColors);
 }
 
-btnRandomColor.addEventListener('click', newColors);
-
-// Requisito 4 - https://stackoverflow.com/questions/14984643/css-pick-a-random-color-from-array
+btnRandomColor.addEventListener('click', newButtons);
