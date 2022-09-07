@@ -34,8 +34,8 @@
   background-color: blue;
 }
 
-#button-random-color {
-  margin: 0 10px;
+#button-random-color, #clear-board {
+  margin: 0 0 0 10px;
   padding: 5px;
 }
 

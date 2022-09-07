@@ -1,6 +1,8 @@
 const paletteColor = document.querySelectorAll('.color');
 const btnRandomColor = document.getElementById('button-random-color');
+const btnClearBoard = document.getElementById('clear-board');
 const board = document.getElementById('pixel-board');
+const boardPixels = document.querySelectorAll('.pixel');
 const firstColor = paletteColor[0];
 const secondColor = paletteColor[1];
 const thirdColor = paletteColor[2];
@@ -33,9 +35,18 @@ function newButtons() {
   }
 
   localStorage.setItem('colorPalette', JSON.stringify(storageColors));
-
   console.log(JSON.parse(localStorage.getItem('colorPalette')));
-} btnRandomColor.addEventListener('click', newButtons);
+}
+
+function oldButtons() {
+  const getColors = JSON.parse(localStorage.getItem('colorPalette'));
+
+  if (localStorage.getItem('colorPalette')) {
+    for (let i = 1; i < paletteColor.length; i += 1) {
+      paletteColor[i].style.backgroundColor = getColors[i - 1];
+    }
+  }
+}
 
 function pixelBoard() {
   for (let i = 0; i < 5; i += 1) {
@@ -51,11 +62,11 @@ function pixelBoard() {
       pixels.className = 'pixel';
     }
   }
-} pixelBoard();
+}
 
 function startSelected() {
   firstColor.classList.add('selected');
-} startSelected();
+}
 
 function firstSelected() {
   if (firstColor.classList[1] === undefined) {
@@ -97,7 +108,19 @@ function fourthSelected() {
   }
 }
 
-// Color selected - https://bobbyhadz.com/blog/javascript-remove-class-from-multiple-elements
+function clearBoard() {
+  for (let i = 1; i < boardPixels.length; i += 1) {
+    boardPixels.style.backgroundColor = 'white';
+  }
+}
+
+oldButtons();
+pixelBoard();
+startSelected();
+
+btnRandomColor.addEventListener('click', newButtons);
+btnClearBoard.addEventListener('click', clearBoard);
+// Class selected - https://bobbyhadz.com/blog/javascript-remove-class-from-multiple-elements
 firstColor.addEventListener('click', firstSelected);
 secondColor.addEventListener('click', secondSelected);
 thirdColor.addEventListener('click', thirdSelected);
