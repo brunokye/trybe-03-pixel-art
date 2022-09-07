@@ -1,15 +1,23 @@
+const inicialColors = ['black', 'red', 'green', 'blue'];
 const paletteColor = document.querySelectorAll('.color');
 const btnRandomColor = document.getElementById('button-random-color');
 const btnClearBoard = document.getElementById('clear-board');
 const board = document.getElementById('pixel-board');
-const boardPixels = document.querySelectorAll('.pixel');
 const firstColor = paletteColor[0];
 const secondColor = paletteColor[1];
 const thirdColor = paletteColor[2];
 const fourthColor = paletteColor[3];
+let boardPixels = document.querySelectorAll('.pixel');
 let storageColors = [];
 
 // Random RGB - https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript
+
+function inicialButtons() {
+  for (let i = 0; i < paletteColor.length; i += 1) {
+    paletteColor[i].style.backgroundColor = inicialColors[i];
+  }
+}
+
 function newColors() {
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
   const r = randomBetween(0, 255);
@@ -62,6 +70,8 @@ function pixelBoard() {
       pixels.className = 'pixel';
     }
   }
+
+  boardPixels = document.querySelectorAll('.pixel');
 }
 
 function startSelected() {
@@ -108,15 +118,31 @@ function fourthSelected() {
   }
 }
 
-function clearBoard() {
-  for (let i = 1; i < boardPixels.length; i += 1) {
-    boardPixels.style.backgroundColor = 'white';
+function changeColor(event) {
+  const selectedColor = document.getElementsByClassName('selected')[0];
+  const getColor = selectedColor.style.backgroundColor;
+  const actualColor = event.target;
+
+  actualColor.style.backgroundColor = getColor;
+}
+
+function pixelListen() {
+  for (let i = 0; i < boardPixels.length; i += 1) {
+    boardPixels[i].addEventListener('click', changeColor);
   }
 }
 
+function clearBoard() {
+  for (let i = 0; i < boardPixels.length; i += 1) {
+    boardPixels[i].style.backgroundColor = 'rgb(255, 255, 255)';
+  }
+}
+
+inicialButtons();
 oldButtons();
 pixelBoard();
 startSelected();
+pixelListen();
 
 btnRandomColor.addEventListener('click', newButtons);
 btnClearBoard.addEventListener('click', clearBoard);
