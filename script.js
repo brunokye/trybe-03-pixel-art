@@ -1,4 +1,4 @@
-const inicialColors = ['black', 'red', 'green', 'blue'];
+const inicialColors = ['rgb(0, 0, 0)', 'rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
 const paletteColor = document.querySelectorAll('.color');
 const btnRandomColor = document.getElementById('button-random-color');
 const btnClearBoard = document.getElementById('clear-board');
@@ -9,15 +9,15 @@ const thirdColor = paletteColor[2];
 const fourthColor = paletteColor[3];
 let boardPixels = document.querySelectorAll('.pixel');
 let storageColors = [];
+let storagePixels;
 
-// Random RGB - https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript
-
-function inicialButtons() {
+function initialButtons() {
   for (let i = 0; i < paletteColor.length; i += 1) {
     paletteColor[i].style.backgroundColor = inicialColors[i];
   }
 }
 
+// Random RGB - https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript
 function newColors() {
   const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
   const r = randomBetween(0, 255);
@@ -43,7 +43,6 @@ function newButtons() {
   }
 
   localStorage.setItem('colorPalette', JSON.stringify(storageColors));
-  console.log(JSON.parse(localStorage.getItem('colorPalette')));
 }
 
 function oldButtons() {
@@ -72,6 +71,8 @@ function pixelBoard() {
   }
 
   boardPixels = document.querySelectorAll('.pixel');
+  // Array.fill - https://attacomsian.com/blog/javascript-array-populate
+  storagePixels = new Array(boardPixels.length).fill('white');
 }
 
 function startSelected() {
@@ -124,11 +125,14 @@ function changeColor(event) {
   const actualColor = event.target;
 
   actualColor.style.backgroundColor = getColor;
+
+  return getColor;
 }
 
 function pixelListen() {
   for (let i = 0; i < boardPixels.length; i += 1) {
     boardPixels[i].addEventListener('click', changeColor);
+    localStorage.setItem('pixelBoard', JSON.stringify(storagePixels));
   }
 }
 
@@ -138,11 +142,22 @@ function clearBoard() {
   }
 }
 
-inicialButtons();
+function oldColors() {
+  const getColors = JSON.parse(localStorage.getItem('pixelBoard'));
+
+  if (localStorage.getItem('pixelBoard')) {
+    for (let i = 0; i < boardPixels.length; i += 1) {
+      boardPixels[i].style.backgroundColor = getColors[i];
+    }
+  }
+}
+
+initialButtons();
 oldButtons();
 pixelBoard();
 startSelected();
 pixelListen();
+oldColors();
 
 btnRandomColor.addEventListener('click', newButtons);
 btnClearBoard.addEventListener('click', clearBoard);
