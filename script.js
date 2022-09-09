@@ -77,10 +77,6 @@ function pixelBoard() {
   storagePixels = new Array(boardPixels.length).fill('white');
 }
 
-function startSelected() {
-  firstColor.classList.add('selected');
-}
-
 function firstSelected() {
   if (firstColor.classList[1] === undefined) {
     paletteColor.forEach((color) => {
@@ -121,6 +117,14 @@ function fourthSelected() {
   }
 }
 
+function savePixels() {
+  for (let i = 0; i < boardPixels.length; i += 1) {
+    storagePixels[i] = boardPixels[i].style.backgroundColor;
+  }
+
+  localStorage.setItem('pixelBoard', JSON.stringify(storagePixels));
+}
+
 function changeColor(event) {
   const selectedColor = document.getElementsByClassName('selected')[0];
   const getColor = selectedColor.style.backgroundColor;
@@ -128,13 +132,12 @@ function changeColor(event) {
 
   actualColor.style.backgroundColor = getColor;
 
-  return getColor;
+  savePixels();
 }
 
 function pixelListen() {
   for (let i = 0; i < boardPixels.length; i += 1) {
     boardPixels[i].addEventListener('click', changeColor);
-    localStorage.setItem('pixelBoard', JSON.stringify(storagePixels));
   }
 }
 
@@ -175,10 +178,11 @@ function oldColors() {
   }
 }
 
+firstColor.classList.add('selected');
+
 initialButtons();
 oldButtons();
 pixelBoard();
-startSelected();
 pixelListen();
 oldColors();
 
