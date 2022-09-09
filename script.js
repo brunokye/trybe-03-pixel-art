@@ -148,11 +148,9 @@ function newBoard() {
   if (newValue === '' || newValue < 0) {
     return alert('Board inválido!');
   }
-
   if (newValue < 5) {
     newValue = 5;
   }
-
   if (newValue > 50) {
     newValue = 50;
   }
@@ -160,6 +158,7 @@ function newBoard() {
   board.innerHTML = '';
   pixelBoard();
   pixelListen();
+  localStorage.setItem('boardSize', newValue);
 }
 
 function clearBoard() {
@@ -178,10 +177,19 @@ function oldColors() {
   }
 }
 
+function oldBoard() {
+  const getSize = localStorage.getItem('boardSize');
+
+  if (localStorage.getItem('boardSize')) {
+    newValue = getSize;
+  }
+}
+
 firstColor.classList.add('selected');
 
 initialButtons();
 oldButtons();
+oldBoard();
 pixelBoard();
 pixelListen();
 oldColors();
