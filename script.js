@@ -146,6 +146,14 @@ function newBoard() {
     return alert('Board inválido!');
   }
 
+  if (newValue < 5) {
+    newValue = 5;
+  }
+
+  if (newValue > 50) {
+    newValue = 50;
+  }
+
   board.innerHTML = '';
   pixelBoard();
   pixelListen();
