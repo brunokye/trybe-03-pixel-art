@@ -2,7 +2,7 @@ const inicialColors = ['rgb(0, 0, 0)', 'rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(
 const paletteColor = document.querySelectorAll('.color');
 const btnRandomColor = document.getElementById('button-random-color');
 const btnClearBoard = document.getElementById('clear-board');
-const btnBoardSize = document.getElementById('board-size');
+const btnBoardSize = document.getElementById('generate-board');
 const board = document.getElementById('pixel-board');
 const firstColor = paletteColor[0];
 const secondColor = paletteColor[1];
@@ -11,7 +11,7 @@ const fourthColor = paletteColor[3];
 let boardPixels = [];
 let storageColors = [];
 let storagePixels = [];
-let inputBoardSize = 5;
+let newValue = 5;
 
 function initialButtons() {
   for (let i = 0; i < paletteColor.length; i += 1) {
@@ -58,13 +58,13 @@ function oldButtons() {
 }
 
 function pixelBoard() {
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < newValue; i += 1) {
     const lines = document.createElement('div');
 
     board.appendChild(lines);
     lines.className = 'line';
 
-    for (let j = 0; j < 5; j += 1) {
+    for (let j = 0; j < newValue; j += 1) {
       const pixels = document.createElement('div');
 
       lines.appendChild(pixels);
@@ -138,6 +138,19 @@ function pixelListen() {
   }
 }
 
+function newBoard() {
+  const inputBoardSize = document.getElementById('board-size');
+  newValue = inputBoardSize.value;
+
+  if (newValue === '' || newValue < 0) {
+    return alert('Board inválido!');
+  }
+
+  board.innerHTML = '';
+  pixelBoard();
+  pixelListen();
+}
+
 function clearBoard() {
   for (let i = 0; i < boardPixels.length; i += 1) {
     boardPixels[i].style.backgroundColor = 'rgb(255, 255, 255)';
@@ -163,6 +176,7 @@ oldColors();
 
 btnRandomColor.addEventListener('click', newButtons);
 btnClearBoard.addEventListener('click', clearBoard);
+btnBoardSize.addEventListener('click', newBoard);
 // Class selected - https://bobbyhadz.com/blog/javascript-remove-class-from-multiple-elements
 firstColor.addEventListener('click', firstSelected);
 secondColor.addEventListener('click', secondSelected);
