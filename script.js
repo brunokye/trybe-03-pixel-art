@@ -2,14 +2,16 @@ const inicialColors = ['rgb(0, 0, 0)', 'rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(
 const paletteColor = document.querySelectorAll('.color');
 const btnRandomColor = document.getElementById('button-random-color');
 const btnClearBoard = document.getElementById('clear-board');
+const btnBoardSize = document.getElementById('board-size');
 const board = document.getElementById('pixel-board');
 const firstColor = paletteColor[0];
 const secondColor = paletteColor[1];
 const thirdColor = paletteColor[2];
 const fourthColor = paletteColor[3];
-let boardPixels = document.querySelectorAll('.pixel');
+let boardPixels = [];
 let storageColors = [];
-let storagePixels;
+let storagePixels = [];
+let inputBoardSize = 5;
 
 function initialButtons() {
   for (let i = 0; i < paletteColor.length; i += 1) {

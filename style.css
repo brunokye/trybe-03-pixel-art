@@ -18,9 +18,13 @@
   border: 1px solid black;
 }
 
-#button-random-color, #clear-board {
+#button-random-color , #clear-board , #board-size , #generate-board {
   margin: 0 0 0 10px;
   padding: 5px;
+}
+
+#board-size {
+  width: 140px;
 }
 
 #pixel-board {
